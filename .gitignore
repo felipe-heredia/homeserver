@@ -1,0 +1,42 @@
+# Docker configuration and data
+config/*/
+!config/*/.gitkeep
+volumes/
+data/
+
+# Ignore all database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Media files (likely too large for git)
+media/
+
+# Wireguard specific
+config/wireguard/
+
+# qBittorrent specific
+config/qBittorrent/
+*.fastresume
+BT_backup/
+
+# Credentials and keys
+*.pem
+*.key
+*.crt
+*.env
+.env
+
+# Logs
+*.log
+logs/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Editor specific files
+.idea/
+.vscode/
+*.swp
+*.swo
