@@ -47,7 +47,6 @@ services:
       - TZ=America/Sao_Paulo
       - TORRENTING_PORT=51820
       - WEBUI_PORT=8080
-      - DOCKER_MODS=ghcr.io/vuetorrent/vuetorrent-lsio-mod:latest
     volumes:
       - ./config:/config
       - ~/media:/downloads
@@ -113,3 +112,22 @@ services:
       - "9100"
     ports:
       - "9100:9100"
+
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "80:80/tcp"
+      - "443:443/tcp"
+    environment:
+      TZ: "America/Sao_Paulo"
+      FTLCONF_dns_listeningMode: "all"
+    volumes:
+      - "./config/pihole:/etc/pihole"
+    cap_add:
+      - NET_ADMIN
+      - SYS_TIME
+      - SYS_NICE
+    restart: unless-stopped
