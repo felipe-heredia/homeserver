@@ -1,0 +1,21 @@
+name: home-server-infra
+
+services:
+  pihole:
+    image: pihole/pihole:latest
+    container_name: pihole
+    env_file: /srv/docker/infra/config/pihole/.env # coloque /srv/docker/infra/config/pihole/.env
+    environment:
+      - TZ=America/Sao_Paulo
+      - FTLCONF_dns_listeningMode=all
+    volumes:
+      - /srv/docker/infra/config/pihole:/etc/pihole
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "80:80/tcp"
+      - "443:443/tcp"
+    cap_add:
+      - NET_ADMIN
+      - SYS_TIME
+    restart: unless-stopped

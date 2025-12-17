@@ -1,0 +1,92 @@
+name: home-server-vpn
+
+services:
+  wireguard:
+    image: linuxserver/wireguard
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv6.conf.all.disable_ipv6=1
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo
+      - SERVERURL=auto
+      - ALLOWEDIPS=0.0.0.0/0
+    volumes:
+      - /srv/docker/vpn/config/wireguard:/config
+      - /lib/modules:/lib/modules:ro
+    ports:
+      - "51820:51820/udp"
+      - "8080:8080"
+    restart: unless-stopped
+
+  qbittorrent:
+    image: linuxserver/qbittorrent
+    container_name: qbittorrent
+    network_mode: "service:wireguard"
+    depends_on:
+      - wireguard
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo
+      - TORRENTING_PORT=51820
+      - WEBUI_PORT=8080
+    volumes:
+      - /srv/docker/vpn/config:/config
+      - /srv/media:/data/downloads
+    restart: unless-stopped
+
+  sonarr:
+    image: ghcr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    depends_on:
+      - qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo
+    volumes:
+      - /srv/docker/vpn/config/sonarr:/config
+      - /srv/media/tv-shows:/data/downloads/tv-shows
+    ports:
+      - "8989:8989"
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  prowlarr:
+    image: ghcr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo
+    volumes:
+      - /srv/docker/vpn/config/prowlarr:/config
+    ports:
+      - "9696:9696"
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  cross-seed:
+    image: ghcr.io/cross-seed/cross-seed:latest
+    container_name: cross-seed
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo
+    volumes:
+      - /srv/docker/vpn/config/cross-seed:/config
+      - /srv/media:/data/downloads
+    ports:
+      - "2468:2468"
+    command: daemon
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

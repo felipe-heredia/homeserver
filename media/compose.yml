@@ -1,0 +1,16 @@
+name: home-server-media
+
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo
+    volumes:
+      - /srv/docker/media/config/jellyfin:/config
+      - /srv/media:/media:ro
+    ports:
+      - "8096:8096"

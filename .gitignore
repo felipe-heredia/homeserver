@@ -1,24 +1,30 @@
-# Docker configuration and data
-config/*/
-!config/*/.gitkeep
-volumes/
-data/
+# =========================
+# Docker runtime data (NÃO versionar)
+# =========================
+**/config/qBittorrent/
+**/config/sonarr/
+**/config/prowlarr/
+**/config/cross-seed/
+**/config/pihole/
+**/config/jellyfin/
+**/config/grafana/data/
+**/config/grafana/plugins/
+**/config/prometheus/data/
+**/data/
+**/volumes/
+
+# =========================
+# Wireguard (CUIDADO)
+# =========================
+**/config/wireguard/privatekey
+**/config/wireguard/peer*
+**/config/wireguard/*.key
+**/config/wireguard/wg_confs/*.conf
 
 # Ignore all database files
 *.db
 *.sqlite
 *.sqlite3
-
-# Media files (likely too large for git)
-media/
-
-# Wireguard specific
-config/wireguard/
-
-# qBittorrent specific
-config/qBittorrent/
-*.fastresume
-BT_backup/
 
 # Credentials and keys
 *.pem
