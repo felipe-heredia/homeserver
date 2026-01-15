@@ -38,7 +38,7 @@ services:
       - WEBUI_PORT=8080
     volumes:
       - /srv/docker/vpn/config:/config
-      - /srv/media:/data/downloads
+      - /srv/media:/data
     restart: unless-stopped
 
   sonarr:
@@ -52,7 +52,7 @@ services:
       - TZ=America/Sao_Paulo
     volumes:
       - /srv/docker/vpn/config/sonarr:/config
-      - /srv/media/tv-shows:/data/downloads/tv-shows
+      - /srv/media:/data
     ports:
       - "8989:8989"
     restart: unless-stopped
@@ -83,7 +83,7 @@ services:
       - TZ=America/Sao_Paulo
     volumes:
       - /srv/docker/vpn/config/cross-seed:/config
-      - /srv/media:/data/downloads
+      - /srv/media:/data
     ports:
       - "2468:2468"
     command: daemon
