@@ -1,5 +1,5 @@
 # =========================
-# Docker runtime data (NÃO versionar)
+# Docker runtime data
 # =========================
 **/config/qBittorrent/
 **/config/sonarr/
@@ -10,11 +10,13 @@
 **/config/grafana/data/
 **/config/grafana/plugins/
 **/config/prometheus/data/
+**/config/postgres
+**/config/immich-library
 **/data/
 **/volumes/
 
 # =========================
-# Wireguard (CUIDADO)
+# Wireguard
 # =========================
 **/config/wireguard/privatekey
 **/config/wireguard/peer*
