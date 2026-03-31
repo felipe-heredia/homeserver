@@ -9,6 +9,8 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=America/Sao_Paulo
+    devices:
+      - /dev/dri:/dev/dri
     volumes:
       - /srv/docker/media/config/jellyfin:/config
       - /srv/media:/media:ro

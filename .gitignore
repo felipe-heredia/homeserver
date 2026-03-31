@@ -2,6 +2,7 @@
 # Docker runtime data
 # =========================
 **/config/qBittorrent/
+**/config/qui
 **/config/sonarr/
 **/config/prowlarr/
 **/config/cross-seed/

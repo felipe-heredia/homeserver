@@ -90,3 +90,20 @@ services:
     restart: unless-stopped
     extra_hosts:
       - "host.docker.internal:host-gateway"
+
+  qui:
+    image: ghcr.io/autobrr/qui:latest
+    container_name: qui
+    depends_on:
+      - qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo
+    ports:
+      - "7476:7476"
+    volumes:
+      - /srv/docker/vpn/config/qui:/config
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
