@@ -22,3 +22,51 @@ services:
       interval: 30s
       timeout: 2s
       retries: 3
+
+  sonarr:
+    image: ghcr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo
+    volumes:
+      - /srv/docker/automation/config/sonarr:/config
+      - /srv/media:/data
+    ports:
+      - "8989:8989"
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  prowlarr:
+    image: ghcr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo
+    volumes:
+      - /srv/docker/automation/config/prowlarr:/config
+    ports:
+      - "9696:9696"
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  cross-seed:
+    image: ghcr.io/cross-seed/cross-seed:latest
+    container_name: cross-seed
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo
+    volumes:
+      - /srv/docker/automation/config/cross-seed:/config
+      - /srv/media:/data
+    ports:
+      - "2468:2468"
+    command: daemon
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
