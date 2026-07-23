@@ -1,0 +1,29 @@
+http://pihole.home.felipeheredia.com {
+	redir / /admin/ 302
+	reverse_proxy pihole:80
+}
+
+http://100.89.233.73 {
+	redir / /admin/ 302
+	reverse_proxy pihole:80
+}
+
+http://memos.home.felipeheredia.com {
+	reverse_proxy host.docker.internal:5230
+}
+
+http://grafana.home.felipeheredia.com {
+	reverse_proxy host.docker.internal:3000
+}
+
+http://qb.home.felipeheredia.com {
+	reverse_proxy host.docker.internal:8080
+}
+
+http://readeck.home.felipeheredia.com {
+	reverse_proxy host.docker.internal:8000
+}
+
+http://sonarr.home.felipeheredia.com {
+	reverse_proxy host.docker.internal:8989
+}

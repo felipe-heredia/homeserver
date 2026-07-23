@@ -13,9 +13,32 @@ services:
     ports:
       - "53:53/tcp"
       - "53:53/udp"
-      - "80:80/tcp"
-      - "443:443/tcp"
     cap_add:
       - NET_ADMIN
       - SYS_TIME
     restart: unless-stopped
+    networks:
+      - infra
+
+  caddy:
+    image: caddy:2.11-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./config/caddy:/etc/caddy
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - infra
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+networks:
+  infra:
+
+volumes:
+  caddy_data:
+  caddy_config:
