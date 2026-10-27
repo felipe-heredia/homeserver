@@ -27,3 +27,7 @@ http://readeck.home.felipeheredia.com {
 http://sonarr.home.felipeheredia.com {
 	reverse_proxy host.docker.internal:8989
 }
+
+http://vikunja.home.felipeheredia.com {
+	reverse_proxy host.docker.internal:3456
+}

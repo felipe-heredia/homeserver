@@ -10,3 +10,15 @@ services:
       - /srv/docker/productivity/config/memos:/var/opt/memos
     ports:
       - "5230:5230"
+
+  vikunja:
+    image: vikunja/vikunja:latest
+    container_name: vikunja
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "3456:3456"
+    volumes:
+      - /srv/docker/productivity/config/vikunja/files:/app/vikunja/files
+      - /srv/docker/productivity/config/vikunja/db:/db

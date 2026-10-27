@@ -13,6 +13,8 @@
 **/config/prometheus/data/
 **/config/postgres
 **/config/immich-library
+**/config/vikunja/
+**/config/memos
 **/data/
 **/volumes/
 
